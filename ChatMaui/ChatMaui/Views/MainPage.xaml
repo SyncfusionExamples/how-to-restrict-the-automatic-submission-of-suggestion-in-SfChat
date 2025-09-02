@@ -8,17 +8,13 @@
     <ContentPage.BindingContext>
         <local:GettingStartedViewModel/>
     </ContentPage.BindingContext>
-
     <ContentPage.Content>
-
-        <sfchat:SfChat x:Name="sfChat" 
-                       SendMessage="sfChat_SendMessage"
-                       SuggestionItemSelected="sfChat_SuggestionItemSelected"
-                           Messages="{Binding Messages}" 
-                           CurrentUser="{Binding CurrentUser}">
-            
+        <sfchat:SfChat x:Name="sfChat"
+                       Messages="{Binding Messages}"
+                       CurrentUser="{Binding CurrentUser}">
+            <sfchat:SfChat.Behaviors>
+                <local:SfChatSuggestionItemSelectedBehavior />
+            </sfchat:SfChat.Behaviors>
         </sfchat:SfChat>
-
     </ContentPage.Content>
-
 </ContentPage>

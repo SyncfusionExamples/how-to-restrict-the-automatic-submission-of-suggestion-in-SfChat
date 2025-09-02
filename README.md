@@ -3,31 +3,38 @@ This repository contains a sample demonstrating how to restrict the automatic su
 
 ## Sample
 
-```xaml  
+```xaml 
 
-    <sfchat:SfChat x:Name="sfChat" 
-                   SendMessage="sfChat_SendMessage"
-                   SuggestionItemSelected="sfChat_SuggestionItemSelected"
-                   Messages="{Binding Messages}" 
-                   CurrentUser="{Binding CurrentUser}">
-            
-    </sfchat:SfChat>
+        <sfchat:SfChat x:Name="sfChat"
+                       Messages="{Binding Messages}"
+                       CurrentUser="{Binding CurrentUser}">
+            <sfchat:SfChat.Behaviors>
+                <local:SfChatSuggestionItemSelectedBehavior />
+            </sfchat:SfChat.Behaviors>
+        </sfchat:SfChat>
 
-Code Behind :
+Behavior:
 
-    private void sfChat_SendMessage(object sender, SendMessageEventArgs e)
+    public class SfChatSuggestionItemSelectedBehavior : Behavior<SfChat>
     {
-        if (selectedItem  != null) 
+        protected override void OnAttachedTo(SfChat bindable)
         {
-            e.Handled = true;
-            selectedItem = null;
+            base.OnAttachedTo(bindable);
+            bindable.SuggestionItemSelected += OnSuggestionItemSelected;
+        }
+
+        protected override void OnDetachingFrom(SfChat bindable)
+        {
+            base.OnDetachingFrom(bindable);
+            bindable.SuggestionItemSelected -= OnSuggestionItemSelected;
+        }
+
+        private void OnSuggestionItemSelected(object? sender, SuggestionItemSelectedEventArgs e)
+        {
+            e.CancelSendMessage = true;
         }
     }
 
-    private void sfChat_SuggestionItemSelected(object sender, SuggestionItemSelectedEventArgs e)
-    {
-        selectedItem = e.SelectedItem;
-    }
 ```
 
 ## Requirements to run the demo

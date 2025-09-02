@@ -5,28 +5,13 @@ using System.Reflection;
 
 namespace ChatMaui
 {
-public partial class MainPage : ContentPage
-{
-        object selectedItem;
-    public MainPage()
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
-    }
-
-        private void sfChat_SendMessage(object sender, SendMessageEventArgs e)
+        public MainPage()
         {
-            if (selectedItem  != null) 
-            {
-                e.Handled = true;
-                selectedItem = null;
-            }
+            InitializeComponent();
         }
 
-        private void sfChat_SuggestionItemSelected(object sender, SuggestionItemSelectedEventArgs e)
-        {
-            selectedItem = e.SelectedItem;
-        }
     }
 
-    
 }
